@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+  </head>
+  <body>
+    <div>
+      <div>
+        <input type="text" class="activeInput" placeholder="label" />
+        <input type="text" class="activeInput" placeholder="value" />
+      </div>
+      <div>
+        <input type="text" class="activeInput" placeholder="label" />
+        <input type="text" class="activeInput" placeholder="value" />
+      </div>
+      <div>
+        <input type="text" class="activeInput" placeholder="label" />
+        <input type="text" class="activeInput" placeholder="value" />
+      </div>
+      <button id="submit">SUBMIT</button>
+    </div>
+
+    <script>
+      $("#submit").click(() => {
+        $(".activeInput").each(async function(index, val) {
+          console.log(val.value);
+          const response = await fetch(`http://localhost:3000/submitCity`, {
+            method: "POST",
+            cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: "same-origin", // include, *same-origin, omit
+            headers: {
+              "Content-Type": "application/json"
+              // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            redirect: "follow", // manual, *follow, error
+            referrer: "no-referrer", // no-referrer, *client
+            body: JSON.stringify({ data: val.value }) // body data type must match "Content-Type" header
+          });
+          console.log("RESPONSE: ", response);
+        });
+      });
+    </script>
+  </body>
+</html>
